@@ -10,7 +10,7 @@ import { Analytics } from './components/Analytics';
 import { ModelMetadata } from './types';
 import { ModelRegistry as ModelRegistryAPI } from './lib/api';
 import { Database, GitBranch, ChartBar, Cpu } from '@phosphor-icons/react';
-import toast from 'sonner';
+import { toast } from 'sonner';
 
 function App() {
   const [models, setModels] = useState<ModelMetadata[]>([]);
