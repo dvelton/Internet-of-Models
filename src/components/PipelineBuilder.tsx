@@ -25,7 +25,7 @@ import { ModelMetadata, Pipeline } from '@/types';
 import { ModelRegistry, PipelineManager, ExecutionEngine } from '@/lib/api';
 import { Play, Save, Plus, Cpu, Eye, ChatCircle, Waveform, Database, Gear } from '@phosphor-icons/react';
 import { ModelNode } from './PipelineNodes';
-import toast from 'sonner';
+import { toast } from 'sonner';
 
 const MODEL_TYPE_ICONS = {
   llm: ChatCircle,

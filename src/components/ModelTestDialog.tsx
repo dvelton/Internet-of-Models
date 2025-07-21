@@ -8,7 +8,7 @@ import { Separator } from '@/components/ui/separator';
 import { ModelMetadata } from '@/types';
 import { ExecutionEngine } from '@/lib/api';
 import { Play, Clock, DollarSign, CheckCircle, XCircle } from '@phosphor-icons/react';
-import toast from 'sonner';
+import { toast } from 'sonner';
 
 interface ModelTestDialogProps {
   model: ModelMetadata;

@@ -12,7 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ModelMetadata } from '@/types';
 import { ModelRegistry } from '@/lib/api';
 import { X, Plus } from '@phosphor-icons/react';
-import toast from 'sonner';
+import { toast } from 'sonner';
 
 interface ModelRegistrationFormProps {
   onSuccess: (model: ModelMetadata) => void;
