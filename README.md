@@ -2,7 +2,7 @@ Experimental - not for production use.
 
 # Internet of Models (IoM) OS
 
-A comprehensive platform for AI model orchestration and composition - think of it as a "service mesh for AI models" that enables seamless model-to-model communication through visual pipeline building and robust API integration.
+A platform for AI model orchestration and composition - think of it as a "service mesh for AI models" that enables model-to-model communication through visual pipeline building and API integration.
 
 ## 🚀 Features
 
