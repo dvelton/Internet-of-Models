@@ -4,7 +4,7 @@ Experimental - not for production use.
 
 A platform for AI model orchestration and composition - think of it as a "service mesh for AI models" that enables model-to-model communication through visual pipeline building and API integration.
 
-## 🚀 Features
+## Features
 
 ### Core Functionality
 - **Model Registration System**: Register any AI model with metadata, schemas, and performance metrics
@@ -21,7 +21,7 @@ A platform for AI model orchestration and composition - think of it as a "servic
 - **Cost Aware**: Track token usage and costs across all model invocations
 - **Extensible**: Plugin architecture for custom transformations and integrations
 
-## 🛠️ Tech Stack
+## Stack
 
 - **Frontend**: React 19 + TypeScript, TailwindCSS, shadcn/ui components
 - **State Management**: Spark KV store for persistence
@@ -29,7 +29,7 @@ A platform for AI model orchestration and composition - think of it as a "servic
 - **Validation**: Zod for schema validation
 - **Icons**: Phosphor Icons for consistent UI
 
-## 📋 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Modern web browser with JavaScript enabled
@@ -94,7 +94,7 @@ A platform for AI model orchestration and composition - think of it as a "servic
 }
 ```
 
-## 🏗️ Architecture
+## Architecture
 
 ### Component Structure
 ```
@@ -120,7 +120,7 @@ src/
 - **PipelineExecution**: Execution history with performance metrics and costs
 - **ModelInvocation**: Individual model call records with latency and token usage
 
-## 🔌 API Integration
+## API Integration
 
 ### Model Registration
 ```typescript
@@ -154,7 +154,7 @@ const execution = await ExecutionEngine.executePipeline(
 );
 ```
 
-## 🎯 Usage Examples
+## Usage Examples
 
 ### Example 1: Content Generation Pipeline
 1. **Input Processing**: Clean and validate user input
@@ -174,7 +174,7 @@ const execution = await ExecutionEngine.executePipeline(
 3. **Prediction**: Generate predictions with ML model  
 4. **Reporting**: Format results for presentation
 
-## 📊 Monitoring & Analytics
+## Monitoring & Analytics
 
 ### Key Metrics Tracked
 - **Model Performance**: Latency, success rates, error patterns
@@ -188,7 +188,7 @@ const execution = await ExecutionEngine.executePipeline(
 - Cost breakdowns by model and time period
 - Usage patterns and optimization recommendations
 
-## 🔒 Security & Access Control
+## Security & Access Control
 
 ### Security Policies
 - **Public**: Accessible to all users
@@ -200,7 +200,7 @@ const execution = await ExecutionEngine.executePipeline(
 - Per-model authentication configuration
 - CORS-aware request handling
 
-## 🤝 Contributing
+## Contributing
 
 This is an open platform designed for extensibility. Key areas for contribution:
 
@@ -210,7 +210,7 @@ This is an open platform designed for extensibility. Key areas for contribution:
 4. **UI/UX Improvements**: Better visualization and interaction patterns
 5. **Documentation**: Guides, examples, and best practices
 
-## 📈 Performance Considerations
+## Performance Considerations
 
 ### Optimization Strategies
 - **Caching**: Intelligent response caching for repeated inputs
