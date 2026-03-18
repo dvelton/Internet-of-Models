@@ -25,6 +25,12 @@
     "paths": {
       "@/*": [
         "src/*"
+      ],
+      "@github/spark/hooks": [
+        "src/lib/spark-mock/hooks.ts"
+      ],
+      "@github/spark/spark": [
+        "src/lib/spark-mock/spark.ts"
       ]
     },
   },

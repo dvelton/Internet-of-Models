@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { ModelMetadata } from '@/types';
 import { ExecutionEngine } from '@/lib/api';
-import { Play, Clock, DollarSign, CheckCircle, XCircle } from '@phosphor-icons/react';
+import { Play, Clock, CurrencyDollar, CheckCircle, XCircle } from '@phosphor-icons/react';
 import { toast } from 'sonner';
 
 interface ModelTestDialogProps {
@@ -204,7 +204,7 @@ export function ModelTestDialog({ model, children }: ModelTestDialogProps) {
               {model.costPerToken && executionStats && (
                 <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
                   <div className="flex items-center gap-2 text-amber-800 mb-2">
-                    <DollarSign className="w-4 h-4" />
+                    <CurrencyDollar className="w-4 h-4" />
                     <span className="font-medium">Cost Estimate</span>
                   </div>
                   <div className="text-sm text-amber-700">

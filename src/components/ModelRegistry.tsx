@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Separator } from '@/components/ui/separator';
 import { ModelMetadata } from '@/types';
-import { ModelRegistry } from '@/lib/api';
+import { ModelRegistry as ModelRegistryAPI } from '@/lib/api';
 import { Cpu, Eye, ChatCircle, Waveform, Database, Gear, Plus, MagnifyingGlass, Play } from '@phosphor-icons/react';
 import { ModelRegistrationForm } from './ModelRegistrationForm';
 import { ModelTestDialog } from './ModelTestDialog';
@@ -52,7 +52,7 @@ export function ModelRegistry({ onModelSelect, selectedModel }: ModelRegistryPro
 
   const loadModels = async () => {
     try {
-      const allModels = await ModelRegistry.getAllModels();
+      const allModels = await ModelRegistryAPI.getAllModels();
       setModels(allModels);
     } catch (error) {
       console.error('Failed to load models:', error);

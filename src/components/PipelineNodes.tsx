@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { ModelMetadata } from '@/types';
-import { Cpu, Eye, ChatCircle, Waveform, Database, Gear, Settings } from '@phosphor-icons/react';
+import { Cpu, Eye, ChatCircle, Waveform, Database, Gear, GearSix } from '@phosphor-icons/react';
 
 const MODEL_TYPE_ICONS = {
   llm: ChatCircle,
@@ -59,7 +59,7 @@ export function ModelNode({ data, id }: NodeProps<ModelNodeData>) {
             <Dialog open={isConfigOpen} onOpenChange={setIsConfigOpen}>
               <DialogTrigger asChild>
                 <Button size="sm" variant="ghost" className="w-6 h-6 p-0">
-                  <Settings className="w-3 h-3" />
+                  <GearSix className="w-3 h-3" />
                 </Button>
               </DialogTrigger>
               <DialogContent>

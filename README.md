@@ -1,225 +1,54 @@
-Experimental - not for production use.
+# Internet of Models
 
-# Internet of Models (IoM) OS
+> This is a thought experiment, not production software. The repo exists to explore an idea and make it tangible enough to discuss. If you're looking for something to deploy, this isn't it.
 
-A platform for AI model orchestration and composition - think of it as a "service mesh for AI models" that enables model-to-model communication through visual pipeline building and API integration.
+A concept prototype exploring what happens when AI model management needs the same infrastructure patterns that microservices got a decade ago.
 
-## Features
+[Try the live demo](https://dvelton.github.io/Internet-of-Models/)
 
-### Core Functionality
-- **Model Registration System**: Register any AI model with metadata, schemas, and performance metrics
-- **Service Discovery**: Search and filter models by capabilities, latency, cost, and availability  
-- **Dynamic Pipeline Orchestration**: Build complex AI workflows with automatic routing and fallback support
-- **Visual Pipeline Builder**: Drag-and-drop interface for composing model chains
-- **Real-time Testing**: One-click model testing with performance monitoring
-- **Analytics Dashboard**: Monitor usage, performance, and costs across all models
+## The problem
 
-### Key Benefits
-- **Vendor Agnostic**: Works with OpenAI, HuggingFace, local models, or any HTTP API
-- **Developer Focused**: Clean APIs, extensive documentation, and debugging tools
-- **Production Ready**: Built-in retry logic, error handling, and security policies
-- **Cost Aware**: Track token usage and costs across all model invocations
-- **Extensible**: Plugin architecture for custom transformations and integrations
+Most organizations using AI today are running some version of the same setup: a few OpenAI API keys, maybe an Anthropic account, possibly some HuggingFace models, and a growing collection of fine-tuned models for specific tasks. Each has its own API format, auth mechanism, pricing structure, and reliability profile.
+
+The glue between these models is bespoke code. A Python script here, a Lambda function there, some retry logic that one engineer wrote and nobody else understands. There's no central registry of what models are available, no standard way to route between them, no coordinated view of costs or performance, and no obvious place to enforce access control.
+
+This looks a lot like where microservices were before service meshes. Individual services worked fine on their own, but the connections between them were a mess until tools like Istio and Linkerd gave teams a coordination layer.
+
+## The concept
+
+Internet of Models applies the service mesh pattern to AI model management.
+
+A **registry** catalogs every model available to the organization (cloud APIs, local deployments, fine-tuned models) with their schemas, capabilities, costs, and health status. **Pipeline orchestration** lets you compose multi-model workflows where the output of one model feeds into the next, with schema translation between different providers' API formats. **Routing and fallback** handle the case where your primary model is down or rate-limited by automatically switching to a backup, picking models based on latency, cost, or capability requirements. And **observability** tracks what's being called, how often, how fast, and at what cost, across every model and every pipeline.
+
+## The POC
+
+This repo contains a working proof of concept. It's a React app with a model registry for browsing and registering AI models, a visual pipeline builder (drag-and-drop, built on React Flow) for composing multi-model workflows, an analytics dashboard with cost and latency metrics, and a test interface for invoking individual models.
+
+It ships with sample configurations for OpenAI, Anthropic, Google, HuggingFace, and local Ollama models, along with example pipelines for content enhancement and multi-language translation.
+
+## Why this is interesting
+
+**Cost governance.** When model usage is scattered across teams and API keys, nobody has a clear picture of what the organization is spending on AI inference. A centralized registry with cost-per-token tracking and usage analytics changes that.
+
+**Audit and compliance.** In regulated industries, you need to know which model produced which output, when, and with what inputs. Pipeline execution logging gives you that chain of custody.
+
+**Vendor independence.** The pipeline abstraction means a workflow doesn't hard-code a specific provider. Swapping GPT-4 for Claude or a local model means changing the routing, not rewriting the pipeline.
+
+## Open questions
+
+This is a prototype, not production software. The execution engine runs pipeline nodes sequentially instead of resolving the actual dependency graph. There's no CORS proxy for browser-based API calls. The data transformation layer between different providers' schemas is stubbed.
+
+Beyond the engineering, the harder conceptual questions:
+
+- How do you handle streaming responses through a multi-model pipeline?
+- What's the right abstraction for schema translation between providers: automatic inference, manual mapping, or something in between?
+- How should the routing layer balance cost against quality when selecting models?
+- Where does the liability sit when a chained pipeline produces a bad output -- is it the first model, the last one, or the orchestration layer?
 
 ## Stack
 
-- **Frontend**: React 19 + TypeScript, TailwindCSS, shadcn/ui components
-- **State Management**: Spark KV store for persistence
-- **Visualization**: React Flow for pipeline building, Recharts for analytics
-- **Validation**: Zod for schema validation
-- **Icons**: Phosphor Icons for consistent UI
+React 19, TypeScript, Vite, TailwindCSS, shadcn/ui, React Flow, Recharts. Originally built on GitHub Spark; this version uses localStorage for standalone deployment.
 
-## Quick Start
+## License
 
-### Prerequisites
-- Modern web browser with JavaScript enabled
-- Internet connection for external model APIs (optional)
-
-### Getting Started
-1. **Launch the Application**: The app loads with sample models to get you started
-2. **Register Your Models**: Go to Registry → Register Model to add your AI services
-3. **Build Pipelines**: Use the Pipeline Builder to create multi-model workflows  
-4. **Monitor Performance**: Check the Analytics dashboard for usage insights
-
-### Sample Model Registration
-
-```json
-{
-  "name": "GPT-4 Turbo",
-  "description": "Advanced language model for complex reasoning",
-  "endpoint": "https://api.openai.com/v1/chat/completions",
-  "modelType": "llm",
-  "owner": "OpenAI",
-  "latency": 2000,
-  "costPerToken": 0.00003,
-  "securityPolicy": "public",
-  "inputSchema": {
-    "type": "object",
-    "properties": {
-      "messages": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "role": {"type": "string"},
-            "content": {"type": "string"}
-          }
-        }
-      },
-      "temperature": {"type": "number", "minimum": 0, "maximum": 2}
-    },
-    "required": ["messages"]
-  },
-  "outputSchema": {
-    "type": "object",
-    "properties": {
-      "choices": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "message": {
-              "type": "object",
-              "properties": {
-                "content": {"type": "string"}
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "tags": ["openai", "gpt-4", "language-model"],
-  "apiKey": "sk-your-api-key-here"
-}
-```
-
-## Architecture
-
-### Component Structure
-```
-src/
-├── components/
-│   ├── ModelRegistry.tsx          # Browse and manage registered models
-│   ├── ModelRegistrationForm.tsx  # Register new models with validation
-│   ├── ModelTestDialog.tsx        # Test individual models
-│   ├── PipelineBuilder.tsx        # Visual pipeline composition
-│   ├── PipelineNodes.tsx          # Draggable model nodes
-│   └── Analytics.tsx              # Usage metrics and monitoring
-├── lib/
-│   ├── api.ts                     # Core business logic and model management
-│   └── utils.ts                   # Shared utilities
-├── types/
-│   └── index.ts                   # TypeScript definitions
-└── App.tsx                        # Main application shell
-```
-
-### Data Model
-- **ModelMetadata**: Complete model specification with schemas, performance, and security
-- **Pipeline**: Visual workflow definition with nodes and connections  
-- **PipelineExecution**: Execution history with performance metrics and costs
-- **ModelInvocation**: Individual model call records with latency and token usage
-
-## API Integration
-
-### Model Registration
-```typescript
-import { ModelRegistry } from './lib/api';
-
-const model = await ModelRegistry.registerModel({
-  name: "My Custom Model",
-  endpoint: "https://api.example.com/v1/predict",
-  modelType: "custom",
-  inputSchema: { /* JSON Schema */ },
-  outputSchema: { /* JSON Schema */ },
-  // ... other metadata
-});
-```
-
-### Model Invocation
-```typescript
-import { ExecutionEngine } from './lib/api';
-
-const result = await ExecutionEngine.invokeSingleModel(
-  "model_123",
-  { prompt: "Hello, AI!" }
-);
-```
-
-### Pipeline Execution
-```typescript
-const execution = await ExecutionEngine.executePipeline(
-  pipeline,
-  initialInput
-);
-```
-
-## Usage Examples
-
-### Example 1: Content Generation Pipeline
-1. **Input Processing**: Clean and validate user input
-2. **Content Generation**: Generate initial content with GPT-4
-3. **Enhancement**: Improve content with specialized model
-4. **Quality Check**: Validate output meets requirements
-
-### Example 2: Multi-Modal Analysis
-1. **Image Analysis**: Extract features with vision model
-2. **Text Generation**: Generate description from features
-3. **Translation**: Convert to target language
-4. **Summarization**: Create final summary
-
-### Example 3: Data Processing Chain
-1. **Data Ingestion**: Validate and clean input data
-2. **Analysis**: Run statistical analysis
-3. **Prediction**: Generate predictions with ML model  
-4. **Reporting**: Format results for presentation
-
-## Monitoring & Analytics
-
-### Key Metrics Tracked
-- **Model Performance**: Latency, success rates, error patterns
-- **Usage Statistics**: Invocation counts, peak usage times
-- **Cost Analysis**: Token usage, estimated costs per model/pipeline
-- **Health Monitoring**: Model availability, response times
-
-### Dashboard Features
-- Real-time model status indicators
-- Historical performance trends
-- Cost breakdowns by model and time period
-- Usage patterns and optimization recommendations
-
-## Security & Access Control
-
-### Security Policies
-- **Public**: Accessible to all users
-- **Organization**: Restricted to organization members
-- **Private**: Owner-only access
-
-### API Key Management
-- Secure storage of model API keys
-- Per-model authentication configuration
-- CORS-aware request handling
-
-## Contributing
-
-This is an open platform designed for extensibility. Key areas for contribution:
-
-1. **Custom Model Adapters**: Support for new AI service providers
-2. **Pipeline Templates**: Pre-built workflows for common use cases
-3. **Performance Optimizations**: Caching, batching, and parallelization
-4. **UI/UX Improvements**: Better visualization and interaction patterns
-5. **Documentation**: Guides, examples, and best practices
-
-## Performance Considerations
-
-### Optimization Strategies
-- **Caching**: Intelligent response caching for repeated inputs
-- **Load Balancing**: Distribute requests across model replicas
-- **Circuit Breaking**: Protect against cascading failures
-- **Async Processing**: Non-blocking pipeline execution
-
-### Scaling Guidelines
-- Monitor model latencies and adjust routing accordingly
-- Use fallback models for high availability
-- Implement request queuing for rate-limited APIs
-- Consider local model deployment for high-volume use cases
+MIT

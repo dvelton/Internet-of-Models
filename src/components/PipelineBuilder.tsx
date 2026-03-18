@@ -23,7 +23,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { ModelMetadata, Pipeline } from '@/types';
 import { ModelRegistry, PipelineManager, ExecutionEngine } from '@/lib/api';
-import { Play, Save, Plus, Cpu, Eye, ChatCircle, Waveform, Database, Gear } from '@phosphor-icons/react';
+import { Play, FloppyDisk, Plus, Cpu, Eye, ChatCircle, Waveform, Database, Gear } from '@phosphor-icons/react';
 import { ModelNode } from './PipelineNodes';
 import { toast } from 'sonner';
 
@@ -301,7 +301,7 @@ export function PipelineBuilder({ models }: PipelineBuilderProps) {
             <Dialog>
               <DialogTrigger asChild>
                 <Button disabled={nodes.length === 0 || isSaving}>
-                  <Save className="w-4 h-4 mr-2" />
+                  <FloppyDisk className="w-4 h-4 mr-2" />
                   {isSaving ? 'Saving...' : 'Save'}
                 </Button>
               </DialogTrigger>

@@ -1,3 +1,22 @@
 /// <reference types="vite/client" />
-declare const GITHUB_RUNTIME_PERMANENT_NAME: string
-declare const BASE_KV_SERVICE_URL: string
+
+interface SparkKV {
+  get<T>(key: string): Promise<T | null>;
+  set(key: string, value: unknown): Promise<void>;
+  delete(key: string): Promise<void>;
+}
+
+interface SparkUser {
+  id: string;
+  login: string;
+  email: string;
+  avatarUrl: string;
+  isOwner: boolean;
+}
+
+interface Spark {
+  kv: SparkKV;
+  user(): Promise<SparkUser>;
+}
+
+declare const spark: Spark;
