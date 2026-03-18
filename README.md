@@ -1,6 +1,6 @@
 # Internet of Models
 
-> This is a thought experiment, not production software. The repo exists to explore an idea and make it tangible enough to discuss. If you're looking for something to deploy, this isn't it.
+> This is a thought experiment, not production software.
 
 A concept prototype exploring what happens when AI model management needs the same infrastructure patterns that microservices got a decade ago.
 
